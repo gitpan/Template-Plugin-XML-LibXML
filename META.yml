@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Template-Plugin-XML-LibXML
-version: 1.05
+version: 1.06
 license: perl
 distribution_type: module
 requires:
@@ -13,8 +13,8 @@ conflicts: {}
 provides:
   Template::Plugin::XML::LibXML:
     file: lib/Template/Plugin/XML/LibXML.pm
-    version: 1.05
+    version: 1.06
   XML::LibXML::NodeList:
     file: lib/Template/Plugin/XML/LibXML.pm
-    version: ~
-generated_by: Module::Build version 0.18
+    version: 1.06
+generated_by: Module::Build version 0.18_02

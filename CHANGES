@@ -1,3 +1,8 @@
+1.06  stoped Makefile.PL creating a makefile that runs Build.PL
+      by mistake
+
+      Actually fixed the bug from 1.02.
+
 1.05  Added Build.PL and META.yml
 
       Added how to use Build.PL to README

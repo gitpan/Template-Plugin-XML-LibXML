@@ -37,7 +37,7 @@ BEGIN { eval "use Scalar::Util qw(openhandle)" }
 use base qw( Template::Plugin );
 use vars qw( $VERSION $parser );
 
-$VERSION = 1.05; #sprintf("%d.%02d", q$Revision: 2.50 $ =~ /(\d+)\.(\d+)/);
+$VERSION = 1.06; #sprintf("%d.%02d", q$Revision: 2.50 $ =~ /(\d+)\.(\d+)/);
 
 # these are a list of combatibilty mappings from names that were used
 # (or logical extensions of those names for html) in the XML::XPath

@@ -3,14 +3,16 @@ use ExtUtils::MakeMaker;
 # okay, complain about not having a nice version of Scalar::Util
 # if they don't have one
 
-eval "use Scalar::Util qw(openhandle)";
+my $foo;
+eval "use Scalar::Util qw(openhandle); \$foo = defined(&openhandle)";
 
-unless (defined(&openhandle))
+unless ($foo)
 {
   print STDERR <<EOW ;
-WARNING: You don't have a modern version of Scalar::Util installed
-this is a recommended (but not required) module.  See the BUGS
-section of Template::Plugin::XML::LibXML's pod for more infomation.
+WARNING: You don't have a version 1.07 or later of Scalar::Util
+installed, and this is a recommended (but not required) module.
+See the BUGS section of Template::Plugin::XML::LibXML's pod for
+more infomation.
 EOW
 }
 
@@ -29,4 +31,7 @@ WriteMakefile(
 
     'ABSTRACT_FROM' => 'lib/Template/Plugin/XML/LibXML.pm',
     'AUTHOR' => 'Mark Fowler <mark@twoshortplanks.com>',
+
+    # Don't run Build.PL (thanks Randal and Dom)
+    'PL_FILES' => {},
 );
