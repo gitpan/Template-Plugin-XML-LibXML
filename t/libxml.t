@@ -300,6 +300,15 @@ $stash->set("bob", scalar($xml->findnodes("//*[local-name()='item'][1]")))
     <link>http://oh.boy.com/</link>
   </thingy>
 </document>
+-- test --
+# test viewing something that has no alpha numeric tag names
+[% VIEW myview %]
+  [% BLOCK foo_bar %]Wibble[% END %]
+[% END;
+ USE xml = XML.LibXML("<foo-bar/>");
+ myview.print(xml) %]
+-- expect --
+Wibble
 ######################################################################
 # extra arguments
 ######################################################################

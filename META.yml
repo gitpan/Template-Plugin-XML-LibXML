@@ -1,0 +1,20 @@
+--- #YAML:1.0
+name: Template-Plugin-XML-LibXML
+version: 1.05
+license: perl
+distribution_type: module
+requires:
+  Template: 2.06
+  XML::LibXML: 1.52
+recommends:
+  Scalar::Util: 1.07
+build_requires: {}
+conflicts: {}
+provides:
+  Template::Plugin::XML::LibXML:
+    file: lib/Template/Plugin/XML/LibXML.pm
+    version: 1.05
+  XML::LibXML::NodeList:
+    file: lib/Template/Plugin/XML/LibXML.pm
+    version: ~
+generated_by: Module::Build version 0.18

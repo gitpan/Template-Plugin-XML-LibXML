@@ -10,7 +10,7 @@
 #   Mark Fowler   <mark@twoshortplanks.com>
 #
 # COPYRIGHT
-#   Copyright (C) 2002 Andy Wardley.  All Rights Reserved.
+#   Copyright (C) 2002-3 Mark Fowler.  All Rights Reserved.
 #
 #   This module is free software; you can redistribute it and/or
 #   modify it under the same terms as Perl itself.
@@ -37,7 +37,7 @@ BEGIN { eval "use Scalar::Util qw(openhandle)" }
 use base qw( Template::Plugin );
 use vars qw( $VERSION $parser );
 
-$VERSION = 1.01; #sprintf("%d.%02d", q$Revision: 2.50 $ =~ /(\d+)\.(\d+)/);
+$VERSION = 1.05; #sprintf("%d.%02d", q$Revision: 2.50 $ =~ /(\d+)\.(\d+)/);
 
 # these are a list of combatibilty mappings from names that were used
 # (or logical extensions of those names for html) in the XML::XPath
@@ -207,7 +207,14 @@ package XML::LibXML::Node;
 
 sub present {
   my ($self, $view) = @_;
-  $view->view($self->localname(), $self);
+  my $localname = $self->localname();
+
+  # convert anything that isn't A-Za-z1-9 to _.  All those years
+  # of working on i18n and this throws it all away.  I suck.
+  $localname =~ s/[^A-Za-z0-9]/_/g;
+
+  # render out with the block matching the hacked version of localname
+  $view->view($localname, $self);
 }
 
  #-----------------------------------------------------------------------
@@ -301,20 +308,20 @@ sub present {
     return $output;
 }
 
-package debug;
+#package debug;
 
-sub debug
-{
-  no warnings;
-  my $nodename;
-  eval { $nodename = $_[0]->nodeName(); };
-  my $methodname = (caller(1))[3];
-  $methodname =~ s/.*:://;
-
-  print STDERR "${nodename}'s $methodname: ".
-               (join ",", (map { ref } @_)) .
-	       "\n";
-}
+#sub debug
+#{
+#  local $^W;
+#  my $nodename;
+#  eval { $nodename = $_[0]->nodeName(); };
+#  my $methodname = (caller(1))[3];
+#  $methodname =~ s/.*:://;
+#
+#  print STDERR "${nodename}'s $methodname: ".
+#               (join ",", (map { ref } @_)) .
+#	       "\n";
+#}
 
 1;
 
@@ -485,14 +492,17 @@ all multiple spaces in the text to single spaces.
 
    <p>[% htmlroot.findvalue("normalize-space(
                               /html/body/p[1]/text()
-                           )" %]</p>
+                           )" | html %]</p>
 
-A slightly more advanced technique is to extract a whole node and use
-the toString method call on it to convert it to a string of XML.  This
-is most useful when you are extracting an existing chunk of XML en
-mass, as things like E<lt>bE<gt> and E<lt>iE<gt> tags will be passed
-thought correctly and entities will be encoded suitably (for example
-'"' will be turned into '&quot;')
+Note that, as above, when we're inserting the values extracted into a
+XML or HTML document we have to be careful to re-encode the attributes
+we need to escape with something like the html filter.  A slightly
+more advanced technique is to extract a whole node and use the
+toString method call on it to convert it to a string of XML.  This is
+most useful when you are extracting an existing chunk of XML en mass,
+as things like E<lt>bE<gt> and E<lt>iE<gt> tags will be passed thought
+correctly and entities will be encoded suitably (for example '"' will
+be turned into '&quot;')
 
   # get the second paragraph and insert it here as XML
   [% htmlroot.findnodes("/html/body/p[2]").toString %]
@@ -502,8 +512,9 @@ keyword) to recursively render out the XML.  By loading this plugin
 C<present> methods will be created in the B<XML::LibXML::Node> classes
 and subclasses.  Calling C<present> on a node with a VIEW will cause
 it to be rendered by the view block matching the local name of that
-node.  So a E<lt>authorE<gt> tag will be rendered by the 'author'
-block.  Text nodes will call the 'text' block with the text of the node.
+node (with any non alphanumeric charecters turned to underscores.  So
+a E<lt>authorE<gt> tag will be rendered by the 'author' block.  Text
+nodes will call the 'text' block with the text of the node.
 
 As the blocks can refer back to both the node it was called with and
 the view they can choose to recursively render out it's children using
@@ -546,7 +557,11 @@ This is probably best shown with a well commented example:
     <b>[% item.content(view) %]</b>
     [% END %]
 
-    [% BLOCK text; item; END %]
+    # render text, re-encoding the attributes as we go
+    [% BLOCK text; item | html; END %]
+
+    # render arrays out
+    [% BLOCK list; FOREACH i = item; view.print(i); END ; END %]
 
   [% END %]
 
@@ -584,14 +599,15 @@ to the author
 
 Written by Mark Fowler <mark@twoshortplanks.com>
 
-Copyright Mark Fowler 2002, all rights reserved.
+Copyright Mark Fowler 2002-3, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 This module wouldn't have been possible without the wonderful work
 that has been put into the libxml library by the gnome team or the
-equally wonderful work put in by Matt Sergeant in creating XML::LibXML.
+equally wonderful work put in by Matt Sergeant and Christian Glahn in
+creating XML::LibXML.
 
 =head1 SEE ALSO
 

@@ -3,7 +3,7 @@
   <section title="DESCRIPTION">
     This documentation describes the Template module which is the
     direct Perl interface into the <em>Template Toolkit</em>.  It
-    covers the use of the module and gives a brief summary of
+    covers the use of the module &amp; gives a brief summary of
     configuration options and template directives.  Please see
     <pod>Template::Manual</pod> for the complete reference manual
     which goes into much greater depth about the features and use of

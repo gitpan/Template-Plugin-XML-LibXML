@@ -147,7 +147,7 @@ The title of the first page is 'The Foo Page'
     <b>[% item.content(view) %]</b>
     [% END %]
 
-    [% BLOCK text; item; END %]
+    [% BLOCK text; item | html; END %]
 
   [% END %]
 
@@ -183,7 +183,7 @@ The title of the first page is 'The Foo Page'
     <p>
     This documentation describes the Template module which is the
     direct Perl interface into the <em>Template Toolkit</em>.  It
-    covers the use of the module and gives a brief summary of
+    covers the use of the module &amp; gives a brief summary of
     configuration options and template directives.  Please see
     
     <b>Template::Manual</b>

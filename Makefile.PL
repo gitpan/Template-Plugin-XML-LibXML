@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 # okay, complain about not having a nice version of Scalar::Util
 # if they don't have one
 
-eval { "use Scalar::Util qw(openhandle)" };
+eval "use Scalar::Util qw(openhandle)";
 
 unless (defined(&openhandle))
 {

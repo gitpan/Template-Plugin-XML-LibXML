@@ -1,10 +1,10 @@
               LibXML Plugin for the Template Toolkit
 
-                            Version 1.01
+                            Version 1.04
 
-                           25 August 2002
+                           11th June 2003
 
-        Copyright (C) 2002 Mark Fowler.  All Rights Reserved
+       Copyright (C) 2002-3 Mark Fowler.  All Rights Reserved
 
        This is free software; you can redistribute it and/or
            modify it under the same terms as Perl itself.
@@ -37,12 +37,21 @@ INSTALL
 
 Just like any other Perl module:
 
-  tar zxf Template-Toolkit-X.XX.tar.gz
-  cd Template-Toolkit-X.XX
+  tar zxf Template-Plugin-XML-LibXML-X.XX.tar.gz
+  cd Template-Plugin-XML-LibXML-X.XX
   perl Makefile.PL
   make
   make test
   make install      (as root, or with sudo, etc)
+
+Or, if you're using the new Module::Build install method:
+
+  tar zxf Template-Plugin-XML-LibXML-X.XX.tar.gz
+  cd Template-Plugin-XML-LibXML-X.XX
+  perl Build.PL
+  ./Build
+  ./Build test
+  ./Build install   (as root, or with sudo, etc)
 
 This requires
 
@@ -53,16 +62,9 @@ This requires
 It may work with earlier versions of both modules, but it hasn't been
 tested with them.
 
-WHAT'S NEW
-----------
+It also recommends
 
-This is a brand new module.  I haven't really had time to try it
-out much and there's bound to be bugs, both in the code and in the
-documentation.  Please contact me (as described below in support)
-if you find any.
-
-All the code in the documentation at least should work on your system
-- it's tested in the t/docu.t test.
+  * Scalar::Util 1.07
 
 SUPPORT
 -------
@@ -83,22 +85,21 @@ addressed to either the perl xml mailing list at
 
  mailto:perl-xml-request@listserv.ActiveState.com?subject=help
 
-via RT, to Matt Sergeant (the author of the module), or to the
-current maintainers of the underlying GNOME module libxml.
-
+or to the current maintainer of XML::LibXML (Christian Glahn
+christian.glahn@uibk.ac.at), or to the current maintainers of the
+underlying GNOME module libxml2.
 
 AUTHOR
 ------
 
 This plugin was written by Mark Fowler <mark@twoshortplanks.com>. It
-uses the XML::LibXML module (written by Matt Sergeant) and the
-Template Toolkit (written by Andy Wardly).
+uses the XML::LibXML module (written by Matt Sergeant and Christian
+Glahn) and the Template Toolkit (written by Andy Wardly).
 
 COPYRIGHT
 ---------
 
-Copyright (C) 2002 Mark Fowler.  All Rights Reserved.
+Copyright (C) 2002-3 Mark Fowler.  All Rights Reserved.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
-
