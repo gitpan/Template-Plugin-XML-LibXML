@@ -100,8 +100,13 @@ The title of the first page is 'The Foo Page'
 -- expect --
 <p>Buffy Summers knows this tale by heart, and no matter how hard she tries to be just a "normal girl", she can not escape from her destiny.</p>
 -- test --
-[% USE htmlroot = XML.LibXML(xhtml);
-   htmlroot.findnodes("/html/body/p[2]").toString %]
+[% # note this is slightly different from the documentation.  This is to cope with
+   # the fact that the html filter has changed on different versionso of TT
+   # and no longer quotes '"'
+   USE htmlroot = XML.LibXML(xhtml);
+   string = htmlroot.findnodes("/html/body/p[2]").toString;
+   string.replace('"', '&quot;');
+%]
 -- expect --
 <p>
    Thankfully, she is not alone in her quest to save the world, as she

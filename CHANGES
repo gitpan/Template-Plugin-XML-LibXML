@@ -1,3 +1,11 @@
+1.07  Made the tests more tollerant to cope with modern versions
+      of libxml2.
+
+      html no longer quotes '"', so altered tests to cope with
+      both versions.
+
+      Bah, testing xml with string comparison is hard!
+
 1.06  stoped Makefile.PL creating a makefile that runs Build.PL
       by mistake
 

@@ -78,149 +78,217 @@ __END__
 #################################################################################
 -- test --
 # try finding it by name
-[% USE xml = XML.LibXML(xmlfile); xml.toString %]
+[% USE xml = XML.LibXML(xmlfile); 
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # try finding it by filehandle
-[% USE xml = XML.LibXML(xmlhandle); xml.toString %]
+[% USE xml = XML.LibXML(xmlhandle);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0" encoding="UTF-8"?>
 [% xmldata %]
 -- test --
 # xml string with declaration
 [% str = BLOCK -%]
 <?xml version="1.0"?>
 [% xmldata %]
-[% END; USE xml = XML.LibXML(str); xml.toString %]
+[% END; USE xml = XML.LibXML(str);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # and without that declaration
 [% str = BLOCK -%]
 [% xmldata %]
-[% END; USE xml = XML.LibXML(str); xml.toString %]
+[% END; USE xml = XML.LibXML(str);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # okay, try passing in a document with html in it
-[% USE xml = XML.LibXML(htmldata); xml.toString %]
+[% USE xml = XML.LibXML(htmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 -- test --
 # finally, a xml document with html in it that's got an xml declaration
 [% str = BLOCK -%]
 <?xml version="1.0"?>
 <html><body>hello</body></html>
-[% END; USE xml = XML.LibXML(str); xml.toString %]
+[% END; USE xml = XML.LibXML(str);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0"?>
 <html><body>hello</body></html>
 -- test --
 #################################################################################
 # named parameter tests - normal attributes
 ################################################################################
 # testing filehandles
-[% USE xml = XML.LibXML(fh => xmlhandle2); xml.toString %]
+[% USE xml = XML.LibXML(fh => xmlhandle2);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0" encoding="UTF-8"?>
 [% xmldata %]
 -- test --
 # testing string
-[% USE xml = XML.LibXML(string => xmldata); xml.toString %]
+[% USE xml = XML.LibXML(string => xmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # testing filename
-[% USE xml = XML.LibXML(file => xmlfile); xml.toString %]
+[% USE xml = XML.LibXML(file => xmlfile);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # testing filehandles for html files
-[% USE xml = XML.LibXML(html_fh => htmlhandle); xml.toString %]
+[% USE xml = XML.LibXML(html_fh => htmlhandle);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 -- test --
 # testing string for html strings
-[% USE xml = XML.LibXML(html_string => htmldata); xml.toString %]
+[% USE xml = XML.LibXML(html_string => htmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 -- test --
 # testing filename for html files
-[% USE xml = XML.LibXML(html_file => htmlfile); xml.toString %]
+[% USE xml = XML.LibXML(html_file => htmlfile);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 #################################################################################
 # named parameter tests - XML.XPath emulation
 ################################################################################
 -- test --
 # testing "xml" string emulation
-[% USE xml = XML.LibXML(xml => xmldata); xml.toString %]
+[% USE xml = XML.LibXML(xml => xmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # testing "text" string emulation
-[% USE xml = XML.LibXML(text => xmldata); xml.toString %]
+[% USE xml = XML.LibXML(text => xmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # testing "filename" file emulation
-[% USE xml = XML.LibXML(filename => xmlfile); xml.toString %]
+[% USE xml = XML.LibXML(filename => xmlfile);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
 -- process --
-<?xml version="1.0"?>
 [% xmldata %]
 -- test --
 # testing "html" html_string emulation
-[% USE xml = XML.LibXML(html => htmldata); xml.toString %]
+[% USE xml = XML.LibXML(html => htmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 -- test --
 # testing "html_text" string emulation
-[% USE xml = XML.LibXML(html_text => htmldata); xml.toString %]
+[% USE xml = XML.LibXML(html_text => htmldata);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 -- test --
 # testing "html_filename" file emulation
-[% USE xml = XML.LibXML(html_filename => htmlfile); xml.toString %]
+[% USE xml = XML.LibXML(html_filename => htmlfile);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 -- test --
 # testing "html_file" file emulation
-[% USE xml = XML.LibXML(html_file => htmlfile); xml.toString %]
+[% USE xml = XML.LibXML(html_file => htmlfile);
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
+%]
 -- expect --
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>hello</p><p>world<br/><br/><img src="foo.gif"/></p></body></html>
 ######################################################################
 # Views and all that
@@ -316,18 +384,22 @@ Wibble
 [%
    USE xml = XML.LibXML(xml         => xmldata,
 		        keep_blanks => 0);
-   xml.toString;
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
 %]
 -- expect --
-<?xml version="1.0"?>
 <website id="webzone1"><section name="alpha" title="The Alpha Zone"><page href="/foo/bar" title="The Foo Page"/><page href="/bar/baz" title="The Bar Page"/><page href="/baz/qux" title="The Baz Page"/></section></website>
 -- test --
 [%
    USE xml = XML.LibXML(xmldata, keep_blanks => 0);
-   xml.toString;
+   string = xml.toString;
+   string = string.replace('<\?.*\n','');
+   string = string.replace('<!DOC.*\n','');
+   string
 %]
 -- expect --
-<?xml version="1.0"?>
 <website id="webzone1"><section name="alpha" title="The Alpha Zone"><page href="/foo/bar" title="The Foo Page"/><page href="/bar/baz" title="The Bar Page"/><page href="/baz/qux" title="The Baz Page"/></section></website>
 -- test --
 [% TRY -%]
